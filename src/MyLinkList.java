@@ -5,7 +5,9 @@ class Node{
     Node next;
 }
 public class MyLinkList {
-     Node head;
+
+
+    Node head;
      int total=0;
      //insering the node at the end
      public void insert(Node newNode)
@@ -43,15 +45,17 @@ public class MyLinkList {
      {
              newNode.next=head;
              head=newNode;
+             total++;
 
      }
+
      //delete from last
      void delete()
      {
          if(head==null)
              System.out.println("list is empty");
          else
-         {
+         {   total--;
              Node current=head;
              Node previous=null;
              while(current.next!=null)
@@ -65,6 +69,71 @@ public class MyLinkList {
 
 
      }
+     void insertbeforenode(Node newnode,Node beforenode)
+     {Node temp=head;
+          Node pre=null;
+      int t=0;
+              while(temp.data!=beforenode.data)
+              {
+                  pre=temp;
+                  temp=temp.next;
+               t++;
+              }
+              if(pre==null&&t==0)
+              {
+                  insertatbegining(newnode);
+              }
+              else {
+                   total++;
+                  newnode.next = temp;
+                 pre.next=newnode;
+              }
+
+     }
+    void deletebeforenode(Node beforenode)
+    {
+        Node temp=head;
+        Node pre=null;
+        int t=0;
+        Node[] arr=new Node[size()];
+        while(temp.next!=null)
+        {
+            arr[t]=temp;
+            temp=temp.next;
+            t++;
+        }
+        temp=head;
+        t=0;
+
+        while(temp.data!=beforenode.data)
+        {
+
+               temp=temp.next;
+               t++;
+        }
+
+         if(t==1)
+        {
+           deletefrombegin();
+        }
+        else if(t>1)
+        {  total--;
+          pre=arr[t-2];
+          pre.next=arr[t];
+        }
+    }
+
+     int size()
+    {
+        Node temp=head;
+        int t=0;
+        while(temp.next!=null)
+        {
+            temp=temp.next;
+            t++;
+        }
+        return t;
+    }
      void deletefrombegin()
      {
          if(head==null)
@@ -76,6 +145,7 @@ public class MyLinkList {
              head=head.next;
          }
      }
+
 
     public static void main(String[] args) {
         MyLinkList linklist=new MyLinkList();
@@ -102,7 +172,13 @@ public class MyLinkList {
         n.next=null;
         linklist.insertatbegining(n);
         linklist.display();
-        linklist.deletefrombegin();
+      //  linklist.deletefrombegin();
+        Node n4=new Node();
+        n4.data=58;
+        n4.next=null;
+        linklist.insertbeforenode(n4,n);
+        linklist.display();
+           linklist.deletebeforenode(n4);
         linklist.display();
 
     }
